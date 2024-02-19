@@ -1,6 +1,4 @@
 import SwiftUI
-import Firebase
-
 
 struct MovieDetail: View {
     let imdbID: String
@@ -30,11 +28,11 @@ struct MovieDetail: View {
                             .padding(.trailing, geometry.size.width * 0.30)
                     }
                     
-                    if viewModel.detailResults != nil {
+                    if let movieDetail = viewModel.detailResults {
                         HStack {
-            
-                            if viewModel.detailResults?.poster != "N/A" {
-                                AsyncImage(url: URL(string: viewModel.detailResults?.poster ?? "")) { image in
+                            
+                            if movieDetail.poster != "N/A" {
+                                AsyncImage(url: URL(string: movieDetail.poster)) { image in
                                     image
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
@@ -57,16 +55,16 @@ struct MovieDetail: View {
                                     .foregroundColor(.gray)
                             }
                             
-                       
+                            
                             
                             VStack(alignment: .leading) {
-                                Text(viewModel.detailResults?.title ?? "Title")
+                                Text(movieDetail.title)
                                     .font(.title3)
                                     .foregroundColor(.white)
                                     .padding(.bottom, 5)
                                 HStack {
                                     
-                                    Text("IMDB: \(viewModel.detailResults?.imdbRating ?? "")")
+                                    Text("IMDB: \(movieDetail.imdbRating )")
                                         .font(.headline)
                                         .foregroundColor(.gray)
                                     Image(systemName: "star.fill")
@@ -74,12 +72,12 @@ struct MovieDetail: View {
                                         .font(.system(size: 13))
                                 }
                                 
-                                Text("\(viewModel.detailResults?.released ?? "")")
+                                Text("\(movieDetail.released)")
                                     .font(.headline)
                                     .foregroundColor(.gray)
                                 
                                 
-                                Text("\(viewModel.detailResults?.runtime ?? "")")
+                                Text("\(movieDetail.runtime)")
                                     .font(.headline)
                                     .foregroundColor(.white)
                                     .padding(10)
@@ -93,7 +91,7 @@ struct MovieDetail: View {
                         
                         
                         VStack(alignment: .leading) {
-                            Text(viewModel.detailResults?.genre ?? "")
+                            Text(movieDetail.genre)
                                 .font(.headline)
                                 .foregroundColor(.white)
                                 .padding(10)
@@ -106,28 +104,28 @@ struct MovieDetail: View {
                         
                         
                         VStack(alignment: .leading, spacing: 10) {
-                            Text(viewModel.detailResults?.plot ?? "")
+                            Text(movieDetail.plot)
                                 .font(.body)
                                 .foregroundColor(.white)
                             Text("Director: ")
                                 .font(.headline)
                                 .foregroundColor(.yellow)
                             +
-                            Text("\(viewModel.detailResults?.director ?? "")")
+                            Text("\(movieDetail.director )")
                                 .font(.headline)
                                 .foregroundColor(.gray)
                             Text("Actors: ")
                                 .font(.headline)
                                 .foregroundColor(.yellow)
                             +
-                            Text("\(viewModel.detailResults?.actors ?? "")")
+                            Text("\(movieDetail.actors)")
                                 .font(.headline)
                                 .foregroundColor(.gray)
                             Text("Country: ")
                                 .font(.headline)
                                 .foregroundColor(.yellow)
                             +
-                            Text("\(viewModel.detailResults?.country ?? "")")
+                            Text("\(movieDetail.country)")
                                 .font(.headline)
                                 .foregroundColor(.gray)
                             
@@ -135,14 +133,24 @@ struct MovieDetail: View {
                                 .font(.headline)
                                 .foregroundColor(.yellow)
                             +
-                            Text("\(viewModel.detailResults?.awards ?? "")")
+                            Text("\(movieDetail.awards)")
                                 .font(.headline)
                                 .foregroundColor(.gray)
                         }
                         .padding(.horizontal, 20)
                         .padding(.top)
+                        .onAppear{
+                            LogEventManager().logCustomEvent(title: "movie_detail", parameters: [
+                                "movie_name": movieDetail.title,
+                                "type": movieDetail.genre,
+                                "director": movieDetail.director,
+                                "country": movieDetail.country,
+                                "imdbRating": movieDetail.imdbRating
+                            ])
+                        }
+
                     }else if !viewModel.response {
-                     
+                        
                         VStack {
                             Image(systemName: "info.circle")
                                 .resizable()
@@ -170,25 +178,16 @@ struct MovieDetail: View {
                         Spacer()
                         
                     }
-
+                    
                 }
                 .onAppear {
-                    Analytics.logEvent(AnalyticsEventScreenView,
-                                       parameters: [AnalyticsParameterScreenName: "\(HomePageView.self)",
-                                                   AnalyticsParameterScreenClass: "\(HomePageView.self)"])
+                    LogEventManager().logCurrentView(screenName: "MovieDetail", className: "\(MovieDetail.self)")
                 }
             }
-
             .background(Color.black)
             .onAppear {
                 viewModel.getMovies(with: imdbID)
             }
         }
-        
-        
     }
-    
-    
 }
-
-

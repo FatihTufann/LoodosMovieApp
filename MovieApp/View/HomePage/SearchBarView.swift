@@ -34,6 +34,7 @@ struct SearchBar: View {
             }
             
             Button(action: {
+                LogEventManager().logActionStatus(title: "search_action", status: ActionStatus.button_pressed)
                 onSearchButtonTapped()
             }) {
                 Text("Search")

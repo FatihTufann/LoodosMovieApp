@@ -47,6 +47,9 @@
 		97A8CDC32B82961800D3949A /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 97A8CDB02B82961800D3949A /* Poppins-Medium.ttf */; };
 		97A8CDC42B82961800D3949A /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 97A8CDB12B82961800D3949A /* Poppins-SemiBold.ttf */; };
 		97A8CDC92B82A41E00D3949A /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A8CDC82B82A41E00D3949A /* Config.swift */; };
+		97A8CDD12B837A5500D3949A /* LogEventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A8CDD02B837A5500D3949A /* LogEventManager.swift */; };
+		97A8CDD32B8391F500D3949A /* ActionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97A8CDD22B8391F500D3949A /* ActionStatus.swift */; };
+		97A8CDD62B839CE600D3949A /* NavigationTransitions in Frameworks */ = {isa = PBXBuildFile; productRef = 97A8CDD52B839CE600D3949A /* NavigationTransitions */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +77,8 @@
 		97A8CDB02B82961800D3949A /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
 		97A8CDB12B82961800D3949A /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
 		97A8CDC82B82A41E00D3949A /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		97A8CDD02B837A5500D3949A /* LogEventManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEventManager.swift; sourceTree = "<group>"; };
+		97A8CDD22B8391F500D3949A /* ActionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionStatus.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +87,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97A8CD902B8256BB00D3949A /* FirebaseInAppMessagingSwift-Beta in Frameworks */,
+				97A8CDD62B839CE600D3949A /* NavigationTransitions in Frameworks */,
 				97A8CD882B8256BB00D3949A /* FirebaseDatabaseSwift in Frameworks */,
 				97A8CD962B8256BB00D3949A /* FirebaseMessaging in Frameworks */,
 				97A8CD822B8256BB00D3949A /* FirebaseAnalyticsSwift in Frameworks */,
@@ -156,6 +162,7 @@
 		97A8CCBC2B81695A00D3949A /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				97A8CDCC2B8379A800D3949A /* FirebaseAnalytics */,
 				97A8CDC82B82A41E00D3949A /* Config.swift */,
 				97A8CCC72B82046600D3949A /* Endpoint.swift */,
 				97A8CCC02B81FA8100D3949A /* ViewModel */,
@@ -215,6 +222,15 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		97A8CDCC2B8379A800D3949A /* FirebaseAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				97A8CDD02B837A5500D3949A /* LogEventManager.swift */,
+				97A8CDD22B8391F500D3949A /* ActionStatus.swift */,
+			);
+			path = FirebaseAnalytics;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -250,6 +266,7 @@
 				97A8CD992B8256BB00D3949A /* FirebaseRemoteConfigSwift */,
 				97A8CD9B2B8256BB00D3949A /* FirebaseStorage */,
 				97A8CD9D2B8256BB00D3949A /* FirebaseStorageCombine-Community */,
+				97A8CDD52B839CE600D3949A /* NavigationTransitions */,
 			);
 			productName = MovieApp;
 			productReference = 978A55352B80C6C20057BC75 /* MovieApp.app */;
@@ -283,6 +300,7 @@
 				978A55462B80C6EC0057BC75 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				978A55492B80C7B20057BC75 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				97A8CD7E2B8256BB00D3949A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				97A8CDD42B839CE600D3949A /* XCRemoteSwiftPackageReference "swiftui-navigation-transitions" */,
 			);
 			productRefGroup = 978A55362B80C6C20057BC75 /* Products */;
 			projectDirPath = "";
@@ -317,6 +335,7 @@
 			files = (
 				97A8CCCD2B8223F000D3949A /* NoResultsView.swift in Sources */,
 				97A8CCBB2B81671800D3949A /* MovieItemView.swift in Sources */,
+				97A8CDD12B837A5500D3949A /* LogEventManager.swift in Sources */,
 				97A8CDC92B82A41E00D3949A /* Config.swift in Sources */,
 				978A55592B8121300057BC75 /* MovieDetailView.swift in Sources */,
 				978A553B2B80C6C20057BC75 /* SplashView.swift in Sources */,
@@ -326,6 +345,7 @@
 				97A8CCCA2B82059100D3949A /* MovieDetailViewModel.swift in Sources */,
 				97A8CCC42B81FD9F00D3949A /* MovieDetailModel.swift in Sources */,
 				97A8CCC82B82046600D3949A /* Endpoint.swift in Sources */,
+				97A8CDD32B8391F500D3949A /* ActionStatus.swift in Sources */,
 				978A55552B80E66A0057BC75 /* HomePageView.swift in Sources */,
 				97A8CDA02B8276DA00D3949A /* LottieView.swift in Sources */,
 				978A55392B80C6C20057BC75 /* MovieAppApp.swift in Sources */,
@@ -472,7 +492,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -503,7 +523,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -563,6 +583,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 10.21.0;
+			};
+		};
+		97A8CDD42B839CE600D3949A /* XCRemoteSwiftPackageReference "swiftui-navigation-transitions" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/davdroman/swiftui-navigation-transitions";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.13.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -657,6 +685,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 97A8CD7E2B8256BB00D3949A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
+		};
+		97A8CDD52B839CE600D3949A /* NavigationTransitions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 97A8CDD42B839CE600D3949A /* XCRemoteSwiftPackageReference "swiftui-navigation-transitions" */;
+			productName = NavigationTransitions;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

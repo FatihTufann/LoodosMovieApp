@@ -1,5 +1,6 @@
 import SwiftUI
 import Firebase
+import NavigationTransitions
 
 struct SplashView: View {
     
@@ -27,7 +28,7 @@ struct SplashView: View {
                             isActive: $isActive
                         ) {
                             Button(action: {
-                                
+                                LogEventManager().logActionStatus(title: "splash_button_action", status: ActionStatus.button_pressed)
                                 withAnimation(Animation.linear(duration: 1.0)) {
                                     isLoading = true
                                     isButtonTapped.toggle()
@@ -38,7 +39,7 @@ struct SplashView: View {
                                 }
                             }) {
                                 
-                                Text(splashName)
+                                Text(splashName ?? "LOODOS")
                                     .font(.custom("Poppins-SemiBold", size: 35))
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
@@ -64,11 +65,12 @@ struct SplashView: View {
                 }
             }
         }
+        .navigationTransition(
+            .fade(.in).animation(.easeInOut(duration: 0.3))
+        )
         .onAppear {
             fetchSplashNameConfig()
-            Analytics.logEvent(AnalyticsEventScreenView,
-                               parameters: [AnalyticsParameterScreenName: "\(SplashView.self)",
-                                           AnalyticsParameterScreenClass: "\(SplashView.self)"])
+            LogEventManager().logCurrentView(screenName: "splash_view", className: "\(SplashView.self)")
         }
         
     }
@@ -88,10 +90,12 @@ struct SplashView: View {
                     
                     if let value = self.remoteConfig.configValue(forKey: "splash_name").stringValue {
                         self.splashName = value
+                    }else {
+                        self.splashName = "LOODOS"
                     }
                 }
             } else {
-                Analytics.logEvent("config_event", parameters: [
+                LogEventManager().logCustomEvent(title: "config_param_status", parameters: [
                     "message": "Config not fetched"
                 ])
             }

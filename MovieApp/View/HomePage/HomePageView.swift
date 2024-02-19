@@ -1,13 +1,12 @@
 import SwiftUI
 import Firebase
+import NavigationTransitions
 
 struct HomePageView: View {
     
     @StateObject var viewModel = MovieSearchViewModel()
     @State private var searchText: String = ""
 
-    
-    
     
     var body: some View {
         GeometryReader{geometry in
@@ -36,10 +35,14 @@ struct HomePageView: View {
                             }else {
                                 LazyVStack {
                                     ForEach(viewModel.searchResults) { movie in
-                                        NavigationLink(destination: MovieDetail(imdbID: movie.imdbID).navigationBarBackButtonHidden(true)) {
+                                        NavigationLink(destination: MovieDetail(imdbID: movie.imdbID)
+                                            .navigationBarBackButtonHidden(true)) {
                                             MovieItem(movie: movie, width: geometry.size.width)
                                         }
                                         .listRowSeparator(.hidden)
+                                        .onTapGesture{
+                                            LogEventManager().logActionStatus(title: "navigate_to_detail", status: ActionStatus.navigation_link_pressed)
+                                        }
                                     }
                                 }
                                 .padding(.horizontal,15)
@@ -51,11 +54,12 @@ struct HomePageView: View {
                     .listStyle(PlainListStyle())
                 }
                 .background(Color(.black))
-            } 
+            }
+            .navigationTransition(
+                .fade(.in).animation(.easeInOut(duration: 0.3))
+            )
             .onAppear {
-                Analytics.logEvent(AnalyticsEventScreenView,
-                                   parameters: [AnalyticsParameterScreenName: "\(HomePageView.self)",
-                                               AnalyticsParameterScreenClass: "\(HomePageView.self)"])
+                LogEventManager().logCurrentView(screenName: "HomePage", className: "\(HomePageView.self)")
             }
             
             
