@@ -61,6 +61,9 @@ struct HomePageView: View {
             .onAppear {
                 LogEventManager().logCurrentView(screenName: "HomePage", className: "\(HomePageView.self)")
             }
+            .onTapGesture {
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            }
             
             
         }
