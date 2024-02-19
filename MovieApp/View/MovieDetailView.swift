@@ -25,7 +25,7 @@ struct MovieDetail: View {
                         Text("Movie Detail")
                             .foregroundColor(.yellow)
                             .font(.custom("Poppins-Medium", size: 25))
-                            .padding(.trailing, geometry.size.width * 0.30)
+                            .padding(.trailing, geometry.size.width * 0.27)
                     }
                     
                     if let movieDetail = viewModel.detailResults {
