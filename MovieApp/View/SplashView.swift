@@ -39,7 +39,7 @@ struct SplashView: View {
                                 }
                             }) {
                                 
-                                Text(splashName ?? "LOODOS")
+                                Text(splashName)
                                     .font(.custom("Poppins-SemiBold", size: 35))
                                     .fontWeight(.bold)
                                     .foregroundColor(.white)
@@ -49,7 +49,7 @@ struct SplashView: View {
                             }
                             .disabled(isLoodosTapped)
                             
-                        }
+                        }.disabled(isLoodosTapped)
                         
                         .padding()
                         
