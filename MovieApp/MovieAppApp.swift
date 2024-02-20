@@ -77,41 +77,17 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
 @main
 struct MovieAppApp: App {
+    
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @State var internetConnection: Bool = false
+    @StateObject var networkMonitor = NetworkMonitor()
     
     var body: some Scene {
         
         WindowGroup {
-            
-            if !internetConnection {
-                LottieView(name: "internet", loopMode: .loop)
-                    .onAppear {
-                        checkInternet()
-                    }
-            }else{
-                SplashView()
-            }
+            SplashView()
+                .environmentObject(networkMonitor)
         }
     }
     
-    
-    private func checkInternet () {
-        let monitor = NWPathMonitor()
-        let queue = DispatchQueue(label: "Monitor")
-        monitor.start(queue: queue)
-        
-        monitor.pathUpdateHandler = { path in
-            if path.isExpensive == false {
-                if path.status == .satisfied {
-                    self.internetConnection = true
-                } else {
-                    self.internetConnection = false
-                }
-            }else {
-                self.internetConnection = true
-            }
-        }
-        
-    }
 }
+

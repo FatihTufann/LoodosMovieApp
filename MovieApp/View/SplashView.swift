@@ -6,6 +6,8 @@ struct SplashView: View {
     
     let remoteConfig = RemoteConfig.remoteConfig()
     
+    @EnvironmentObject var networkMonitor: NetworkMonitor
+    
     @State private var isLoading = false
     @State private var splashName: String = ""
     @State private var isActive: Bool = false
@@ -19,7 +21,7 @@ struct SplashView: View {
                     
                     ZStack {
                         NavigationLink(
-                            destination: HomePageView().navigationBarBackButtonHidden(true),
+                            destination: HomePageView().environmentObject(networkMonitor).navigationBarBackButtonHidden(true),
                             isActive: $isActive
                         ){
                             Text(splashName)
@@ -28,7 +30,7 @@ struct SplashView: View {
                                 .foregroundColor(.white)
                                 .scaleEffect(isLoading ? 1.2 : 1.0)
                                 .offset(y: isLoading ? -40 : 0)
-                        }
+                        }.disabled(true)
                         
                         if isLoading {
                             ProgressView()
@@ -39,6 +41,7 @@ struct SplashView: View {
                     }
                     .padding(.bottom)
                 }
+
             }
         }
         .navigationTransition(
@@ -55,27 +58,33 @@ struct SplashView: View {
         settings.minimumFetchInterval = 0
         remoteConfig.configSettings = settings
         
-        remoteConfig.fetch { (status, error) -> Void in
-            if status == .success {
-                self.remoteConfig.activate { changed, error in
-                    guard error == nil else {
-                        return
+        if networkMonitor.isConnected {
+            remoteConfig.fetch { (status, error) -> Void in
+                if status == .success {
+                    self.remoteConfig.activate { changed, error in
+                        guard error == nil else {
+                            return
+                        }
+                        
+                        if let value = self.remoteConfig.configValue(forKey: "splash_name").stringValue {
+                            self.splashName = value
+                            startAnimation()
+                        } else {
+                            self.splashName = "LOODOS"
+                            startAnimation()
+                        }
                     }
-                    
-                    if let value = self.remoteConfig.configValue(forKey: "splash_name").stringValue {
-                        self.splashName = value
-                        startAnimation()
-                    } else {
-                        self.splashName = "LOODOS"
-                        startAnimation()
-                    }
+                } else {
+                    LogEventManager().logCustomEvent(title: "config_param_status", parameters: [
+                        "message": "Config not fetched"
+                    ])
                 }
-            } else {
-                LogEventManager().logCustomEvent(title: "config_param_status", parameters: [
-                    "message": "Config not fetched"
-                ])
             }
+        }else {
+            self.splashName = "LOODOS"
+            startAnimation()
         }
+
     }
     
     private func startAnimation() {
