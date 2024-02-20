@@ -6,52 +6,29 @@ struct SplashView: View {
     
     let remoteConfig = RemoteConfig.remoteConfig()
     
-    @State private var isButtonTapped = false
-    @State private var isLoodosTapped = false
     @State private var isLoading = false
-    @State private var isActive: Bool = false
     @State private var splashName: String = ""
+    @State private var isActive: Bool = false
     
     var body: some View {
-        
-        NavigationView{
-            GeometryReader{ geometry in
-                ZStack{
+        NavigationView {
+            GeometryReader { geometry in
+                ZStack {
                     Color.black
                         .ignoresSafeArea()
                     
-                    ZStack() {
-                        
+                    ZStack {
                         NavigationLink(
-                            destination: HomePageView()
-                                .navigationBarBackButtonHidden(true),
+                            destination: HomePageView().navigationBarBackButtonHidden(true),
                             isActive: $isActive
-                        ) {
-                            Button(action: {
-                                LogEventManager().logActionStatus(title: "splash_button_action", status: ActionStatus.button_pressed)
-                                withAnimation(Animation.linear(duration: 1.0)) {
-                                    isLoading = true
-                                    isButtonTapped.toggle()
-                                    isLoodosTapped = true
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                                        isActive = true
-                                    }
-                                }
-                            }) {
-                                
-                                Text(splashName)
-                                    .font(.custom("Poppins-SemiBold", size: 35))
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.white)
-                                    .scaleEffect(isButtonTapped ? 1.2 : 1.0)
-                                    .offset(y: isLoodosTapped ? -40 : 0)
-                                
-                            }
-                            .disabled(isLoodosTapped)
-                            
-                        }.disabled(isLoodosTapped)
-                        
-                        .padding()
+                        ){
+                            Text(splashName)
+                                .font(.custom("Poppins-SemiBold", size: 35))
+                                .fontWeight(.bold)
+                                .foregroundColor(.white)
+                                .scaleEffect(isLoading ? 1.2 : 1.0)
+                                .offset(y: isLoading ? -40 : 0)
+                        }
                         
                         if isLoading {
                             ProgressView()
@@ -59,7 +36,6 @@ struct SplashView: View {
                                 .progressViewStyle(CircularProgressViewStyle(tint: .yellow))
                                 .padding(.top, geometry.size.height * 0.2)
                         }
-                        
                     }
                     .padding(.bottom)
                 }
@@ -72,9 +48,7 @@ struct SplashView: View {
             fetchSplashNameConfig()
             LogEventManager().logCurrentView(screenName: "splash_view", className: "\(SplashView.self)")
         }
-        
     }
-    
     
     private func fetchSplashNameConfig() {
         let settings = RemoteConfigSettings()
@@ -90,8 +64,10 @@ struct SplashView: View {
                     
                     if let value = self.remoteConfig.configValue(forKey: "splash_name").stringValue {
                         self.splashName = value
-                    }else {
+                        startAnimation()
+                    } else {
                         self.splashName = "LOODOS"
+                        startAnimation()
                     }
                 }
             } else {
@@ -102,8 +78,15 @@ struct SplashView: View {
         }
     }
     
+    private func startAnimation() {
+        withAnimation(Animation.linear(duration: 1.0)) {
+            isLoading = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            isActive = true
+        }
+    }
 }
-
 
 
 #Preview {
