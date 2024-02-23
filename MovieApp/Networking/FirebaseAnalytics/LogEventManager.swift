@@ -16,6 +16,6 @@ class LogEventManager {
     func logActionStatus(title: String, status: ActionStatus) {
         Analytics.logEvent(status.rawValue,
                                parameters: ["name": title,
-                                            "status": status])
+                                            "status": status.rawValue])
     }
 }
