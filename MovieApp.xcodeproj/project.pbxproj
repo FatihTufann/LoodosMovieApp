@@ -185,14 +185,14 @@
 		97A8CCBC2B81695A00D3949A /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				97A8CCC72B82046600D3949A /* Endpoint.swift */,
+				97A8CDC82B82A41E00D3949A /* Config.swift */,
 				977ACE4C2B9E44FA002AFE17 /* APIRouter.swift */,
 				977ACE4E2B9E4533002AFE17 /* MovieRouter.swift */,
 				977ACE522B9E46AF002AFE17 /* MovieManager.swift */,
 				977ACE502B9E4640002AFE17 /* RestAPIClient.swift */,
 				977ACE472B9E3372002AFE17 /* ViewService */,
 				97A8CDCC2B8379A800D3949A /* FirebaseAnalytics */,
-				97A8CDC82B82A41E00D3949A /* Config.swift */,
-				97A8CCC72B82046600D3949A /* Endpoint.swift */,
 				97A8CCC02B81FA8100D3949A /* ViewModel */,
 				97A8CCBF2B81FA6A00D3949A /* Model */,
 				9709CDB22B84CAF900D9EF6F /* NetwokMonitor.swift */,
